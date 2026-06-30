@@ -1,27 +1,27 @@
 # lumen-editor
 
-The Text Editor app for **AspisOS**, a capability-based, no-ambient-authority
+The Text Editor app for **LoricaOS**, a capability-based, no-ambient-authority
 x86-64 operating system built on the from-scratch
-[Aegis](https://github.com/AspisOS/Aegis) kernel.
+[Aegis](https://github.com/LoricaOS/Aegis) kernel.
 
 editor is a small load/edit/save text editor over a fixed-cell text grid. It is
 a standalone component of the Lumen desktop, distributed as a
-[herald](https://github.com/AspisOS/AspisOS) package, and runs as an **external
-client** of the [lumen](https://github.com/AspisOS/lumen) compositor — it
+[herald](https://github.com/LoricaOS/LoricaOS) package, and runs as an **external
+client** of the [lumen](https://github.com/LoricaOS/lumen) compositor — it
 connects to `/run/lumen.sock` over the Lumen window protocol rather than being an
 in-process compositor built-in.
 
 ## Where editor fits
 
-AspisOS is decomposed into independent repositories. editor sits at the leaf of
+LoricaOS is decomposed into independent repositories. editor sits at the leaf of
 the graphical stack:
 
 | Repo | Role |
 |------|------|
-| [`AspisOS/Aegis`](https://github.com/AspisOS/Aegis) | The kernel: capability model, the filesystem, the syscalls the desktop runs on. |
-| [`AspisOS/lumen`](https://github.com/AspisOS/lumen) | The compositor / display server. Owns the framebuffer; every GUI app is one of its clients. |
-| [`AspisOS/glyph`](https://github.com/AspisOS/glyph) | The GUI toolkit editor links against: the bitmap and TTF font renderers (`draw_*`, `font_*`), theme values, and the client side of the Lumen protocol (`lumen_client.h`). |
-| `AspisOS/lumen-editor` | **This repo.** The text editor app. |
+| [`LoricaOS/Aegis`](https://github.com/LoricaOS/Aegis) | The kernel: capability model, the filesystem, the syscalls the desktop runs on. |
+| [`LoricaOS/lumen`](https://github.com/LoricaOS/lumen) | The compositor / display server. Owns the framebuffer; every GUI app is one of its clients. |
+| [`LoricaOS/glyph`](https://github.com/LoricaOS/glyph) | The GUI toolkit editor links against: the bitmap and TTF font renderers (`draw_*`, `font_*`), theme values, and the client side of the Lumen protocol (`lumen_client.h`). |
+| `LoricaOS/lumen-editor` | **This repo.** The text editor app. |
 
 ## What it does
 
@@ -49,7 +49,7 @@ Grounded in `src/main.c`:
 
 ## Capabilities
 
-AspisOS grants a process no ambient authority; it can touch the system only
+LoricaOS grants a process no ambient authority; it can touch the system only
 through capabilities declared for it at exec time. editor's policy
 (`pkg/etc/aegis/caps.d/editor`) is the baseline:
 
@@ -66,12 +66,12 @@ touch files the session itself can.
 
 editor is a basic load/edit/save editor: a single document, a fixed line/column
 ceiling, no undo, search, or syntax highlighting. It is deliberately minimal and
-expected to grow as AspisOS matures. What ships today is honest about its scope.
+expected to grow as LoricaOS matures. What ships today is honest about its scope.
 
 ## Building
 
 editor builds with a musl cross-compiler against a **pinned**
-[glyph](https://github.com/AspisOS/glyph) toolkit artifact (the GUI libraries it
+[glyph](https://github.com/LoricaOS/glyph) toolkit artifact (the GUI libraries it
 links), then packs a signed herald package.
 
 ```sh
@@ -118,6 +118,6 @@ GLYPH_VERSION   the pinned glyph toolkit version it builds against
 ## Dependencies
 
 `depends=lumen` — editor is an external client of the compositor, so installing
-it pulls [lumen](https://github.com/AspisOS/lumen). lumen also ships the desktop
+it pulls [lumen](https://github.com/LoricaOS/lumen). lumen also ships the desktop
 fonts (Inter, JetBrains Mono), so editor inherits them transitively; there is no
 separate font package.
